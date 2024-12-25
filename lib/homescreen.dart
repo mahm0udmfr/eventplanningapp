@@ -1,4 +1,4 @@
-import 'package:eventplanningapp/home_page.dart';
+import 'package:eventplanningapp/home/home_page.dart';
 import 'package:eventplanningapp/profilescreen/profilescreen.dart';
 import 'package:eventplanningapp/utils/imageassets.dart';
 import 'package:flutter/material.dart';

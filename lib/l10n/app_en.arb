@@ -9,5 +9,15 @@
   "map":"Map",
   "love":"Love",
   "profile":"Profile",
-  "welcome":"Welcome Back✨"
+  "welcome":"Welcome Back✨",
+  "sport":"Sport",
+  "birthday":"Birthday",
+  "meeting":"Meeting",
+  "gaming":"Gaming",
+  "workShop":"WorkShop",
+  "bookClub":"Book Club",
+  "exhibition":"Exhibition",
+  "holiday":"Holiday",
+  "eating":"Eating"
+
 }

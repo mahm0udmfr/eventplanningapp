@@ -24,4 +24,6 @@ class ImageAssets {
       "assets/images/profileimage.png";
         static const String profileimagertl =
       "assets/images/profileimagertl.png";
+              static const String birthdayimage =
+      "assets/images/birthdayimage.png";
 }

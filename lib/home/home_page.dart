@@ -1,3 +1,5 @@
+import 'package:eventplanningapp/home/event_item_widget.dart';
+import 'package:eventplanningapp/home/tab_event_widget.dart';
 import 'package:eventplanningapp/providers/apptheme_provider.dart';
 import 'package:eventplanningapp/providers/language_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
@@ -7,14 +9,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+int selectedIndex = 0;
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     var languageProvider = Provider.of<LanguageProvider>(context);
     var themeProvider = Provider.of<AppthemeProvider>(context);
+
+    List<String> eventsNameList = [
+      AppLocalizations.of(context)!.sport,
+      AppLocalizations.of(context)!.birthday,
+      AppLocalizations.of(context)!.meeting,
+      AppLocalizations.of(context)!.gaming,
+      AppLocalizations.of(context)!.workShop,
+      AppLocalizations.of(context)!.bookClub,
+      AppLocalizations.of(context)!.exhibition,
+      AppLocalizations.of(context)!.holiday,
+      AppLocalizations.of(context)!.eating
+    ];
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: screenSize.height * 0.20,
@@ -107,8 +128,41 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: screenSize.height*0.04,)
+            SizedBox(
+              height: screenSize.height * 0.02,
+            ),
+            DefaultTabController(
+              length: eventsNameList.length,
+              initialIndex: selectedIndex,
+              child: TabBar(
+                  onTap: (value) {
+                    selectedIndex = value;
+                    setState(() {});
+                  },
+                  isScrollable: true,
+                  dividerColor: AppColor.transparentColor,
+                  indicatorColor: AppColor.transparentColor,
+                  tabAlignment: TabAlignment.start,
+                  labelPadding:
+                      EdgeInsets.symmetric(horizontal: screenSize.width * 0.01),
+                  tabs: eventsNameList.map((eventname) {
+                    return TabEventWidget(
+                        eventName: eventname,
+                        isSelected:
+                            selectedIndex == eventsNameList.indexOf(eventname));
+                  }).toList()),
+            )
           ],
+        ),
+      ),
+      body: Padding(
+        padding:  EdgeInsets.symmetric(horizontal:screenSize.width*0.02,),
+        child: ListView.separated(
+          separatorBuilder: (context, index) => SizedBox(height: screenSize.height*0.01,),
+          itemCount: 20,
+          itemBuilder: (context, index) {
+            return EventItemWidget();
+          },
         ),
       ),
     );
