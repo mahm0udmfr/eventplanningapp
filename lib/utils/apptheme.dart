@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class Apptheme {
   static final ThemeData lightTheme = ThemeData(
+    scaffoldBackgroundColor: AppColor.whiteColor,
       primaryColor: AppColor.primarylLight,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: AppColor.whiteColor,
           unselectedItemColor: AppColor.whiteColor,
           elevation: 0,
-          
           backgroundColor: AppColor.transparentColor),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         shape: RoundedRectangleBorder(
@@ -19,6 +19,7 @@ class Apptheme {
       appBarTheme: const AppBarTheme(backgroundColor: AppColor.primarylLight));
 
   static final ThemeData darkTheme = ThemeData(
+      scaffoldBackgroundColor: AppColor.primaryDark,
       primaryColor: AppColor.primaryDark,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: AppColor.whiteColor,

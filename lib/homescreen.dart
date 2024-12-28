@@ -1,3 +1,4 @@
+import 'package:eventplanningapp/favoritescreen/favoritescreen.dart';
 import 'package:eventplanningapp/home/home_page.dart';
 import 'package:eventplanningapp/profilescreen/profilescreen.dart';
 import 'package:eventplanningapp/utils/imageassets.dart';
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> tabs = [
     HomePage(),
     Container(),
-    Container(),
+    FavoriteScreen(),
     ProfileScreen(),
   ];
   @override
@@ -40,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
         bottomNavigationBar: BottomAppBar(
           padding: EdgeInsets.all(0),
           color: Theme.of(context).primaryColor,

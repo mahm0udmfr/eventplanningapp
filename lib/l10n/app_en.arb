@@ -18,6 +18,19 @@
   "bookClub":"Book Club",
   "exhibition":"Exhibition",
   "holiday":"Holiday",
-  "eating":"Eating"
-
+  "eating":"Eating",
+  "serach_event":"Search For Event",
+  "logout":"LogOut",
+  "login":"LogIn",
+  "email":"Email",
+  "password":"Password",
+  "forgetpassword":"Forget Password?",
+  "dont_have_account":"Don’t Have Account ?",
+  "or":"Or",
+  "login_with_google":"Login With Google",
+  "create_account":"Create Account",
+  "name":"Name",
+  "repassword":"Retype Password",
+  "already_have_account":"Already Have Account ?",
+  "register":"Register"
 }

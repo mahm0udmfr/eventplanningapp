@@ -1,3 +1,4 @@
+import 'package:eventplanningapp/auth/login/login_screen.dart';
 import 'package:eventplanningapp/profilescreen/language_bottomsheet.dart';
 import 'package:eventplanningapp/profilescreen/theme_bottom_sheet.dart';
 import 'package:eventplanningapp/providers/apptheme_provider.dart';
@@ -5,6 +6,7 @@ import 'package:eventplanningapp/providers/language_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
 import 'package:eventplanningapp/utils/imageassets.dart';
+import 'package:eventplanningapp/widget/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -19,66 +21,67 @@ class ProfileScreen extends StatelessWidget {
     var themeProvider = Provider.of<AppthemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
-          toolbarHeight: screenSize.height * 0.20,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: languageProvider.appLanguage == "en"
-                  ? Radius.circular(60)
-                  : Radius.zero,
-              bottomRight: languageProvider.appLanguage == "ar"
-                  ? Radius.circular(60)
-                  : Radius.zero,
-            ),
+        backgroundColor: AppColor.primarylLight,
+        toolbarHeight: screenSize.height * 0.20,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: languageProvider.appLanguage == "en"
+                ? Radius.circular(60)
+                : Radius.zero,
+            bottomRight: languageProvider.appLanguage == "ar"
+                ? Radius.circular(60)
+                : Radius.zero,
           ),
+        ),
         title: Row(
-  children: [
-    languageProvider.appLanguage == "en"
-        ? Image.asset(
-            ImageAssets.profileimage,
-            width: screenSize.width * 0.3,
-            height: screenSize.height * 0.3,
-          )
-        : Image.asset(
-            ImageAssets.profileimagertl,
-            width: screenSize.width * 0.3,
-            height: screenSize.height * 0.3,
-          ),
-    SizedBox(
-      width: screenSize.width * 0.02,
-    ),
-    Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Mahmoud Ramadan",
-            style: TextStyle(
-              color: AppColor.whiteColor,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              fontFamily: FontsName.inter,
+          children: [
+            languageProvider.appLanguage == "en"
+                ? Image.asset(
+                    ImageAssets.profileimage,
+                    width: screenSize.width * 0.3,
+                    height: screenSize.height * 0.3,
+                  )
+                : Image.asset(
+                    ImageAssets.profileimagertl,
+                    width: screenSize.width * 0.3,
+                    height: screenSize.height * 0.3,
+                  ),
+            SizedBox(
+              width: screenSize.width * 0.02,
             ),
-            overflow: TextOverflow.ellipsis, 
-          ),
-          Text(
-            "mahmoud.mohamed.ram@gmail.com",
-            style: TextStyle(
-              color: AppColor.whiteColor,
-              fontSize: 16,
-              fontWeight: FontWeight.normal,
-              fontFamily: FontsName.inter,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Mahmoud Ramadan",
+                    style: TextStyle(
+                      color: AppColor.whiteColor,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: FontsName.inter,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    "mahmoud.mohamed.ram@gmail.com",
+                    style: TextStyle(
+                      color: AppColor.whiteColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: FontsName.inter,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
-            maxLines: 2,
-              overflow: TextOverflow.ellipsis, 
-          ),
-        ],
-      ),
-    ),
-  ],
-),
+          ],
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.03),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -166,6 +169,25 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
             ),
+            Spacer(),
+            CustomElevatedButton(
+              text: AppLocalizations.of(context)!.logout,
+              backgroundColor: AppColor.redColor,
+              prefixIconButton: Icon(
+                Icons.logout_outlined,
+                color: AppColor.whiteColor,
+                size: screenSize.height * 0.027,
+              ),
+              center: false,
+              onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                            LoginScreen.routename,
+                            (Route<dynamic> route) => false);
+              },
+            ),
+            SizedBox(
+              height: screenSize.height * 0.04,
+            )
           ],
         ),
       ),

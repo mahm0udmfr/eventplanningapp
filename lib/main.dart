@@ -1,3 +1,5 @@
+import 'package:eventplanningapp/auth/login/login_screen.dart';
+import 'package:eventplanningapp/auth/signup/register_screen.dart';
 import 'package:eventplanningapp/homescreen.dart';
 import 'package:eventplanningapp/providers/apptheme_provider.dart';
 import 'package:eventplanningapp/providers/language_provider.dart';
@@ -39,6 +41,8 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeScreen.routename: (context) => const HomeScreen(),
         OnBoarding.routename: (context) => OnBoarding(),
+        LoginScreen.routename: (context) => LoginScreen(),
+        RegisterScreen.routename: (context) => RegisterScreen(),
       },
       initialRoute: MyServices.getString("step") == "1"
           ? HomeScreen.routename

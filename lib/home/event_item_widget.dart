@@ -9,6 +9,7 @@ class EventItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
       height: screenSize.height * 0.28,
       decoration: BoxDecoration(
           border: Border.all(color: AppColor.primarylLight, width: 2),

@@ -18,5 +18,19 @@
   "bookClub":"نادي الكتاب",
   "exhibition":"معرض",
   "holiday":"عطلة",
-  "eating":"الأكل"
+  "eating":"الأكل",
+  "serach_event":"البحث عن الحدث",
+  "logout":"تسجيل خروج",
+  "login":"تسجيل دخول",
+  "email":"الإيميل",
+  "password":"الباسورد",
+  "forgetpassword":"هل نسيت الباسورد؟",
+  "dont_have_account":"ليس لديك حساب؟",
+  "or":"أو",
+  "login_with_google":"تسجيل الدخول بحساب جوجل",
+  "create_account":"إنشاء حساب",
+  "name":"الاسم",
+  "repassword":"أعد كتابة كلمة المرور",
+  "already_have_account":"هل لديك حساب بالفعل ؟",
+  "register":"تسجيل"
 }

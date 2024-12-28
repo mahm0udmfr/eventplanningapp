@@ -157,8 +157,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Padding(
         padding:  EdgeInsets.symmetric(horizontal:screenSize.width*0.02,),
-        child: ListView.separated(
-          separatorBuilder: (context, index) => SizedBox(height: screenSize.height*0.01,),
+        child: ListView.builder(
           itemCount: 20,
           itemBuilder: (context, index) {
             return EventItemWidget();
