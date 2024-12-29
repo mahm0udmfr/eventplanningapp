@@ -22,10 +22,24 @@ class ImageAssets {
       "assets/images/unselectedProfileImage.png";
   static const String profileimage = "assets/images/profileimage.png";
   static const String profileimagertl = "assets/images/profileimagertl.png";
+
   static const String birthdayimage = "assets/images/birthdayimage.png";
+  static const String sport = "assets/images/sport.png";
+  static const String meeting = "assets/images/meeting.png";
+  static const String gamming = "assets/images/gamming.png";
+  static const String eating = "assets/images/eating.png";
+  static const String holiday = "assets/images/holiday.png";
+  static const String exhibition = "assets/images/exhibition.png";
+  static const String workshop = "assets/images/workshop.png";
+  static const String bookclub = "assets/images/bookclub.png";
+  static const String titleicon = "assets/images/titleicon.png";
+  static const String calendericon = "assets/images/calendericon.png";
+  static const String timeicon = "assets/images/timeicon.png";
   static const String iconSearch = "assets/images/icon_search.png";
   static const String emailicon = "assets/images/emailicon.png";
   static const String passwordicon = "assets/images/passwordicon.png";
   static const String hidepasswordicon = "assets/images/hidepasswordicon.png";
-    static const String googleicon = "assets/images/googleicon.png";
+  static const String googleicon = "assets/images/googleicon.png";
+  static const String locationicon = "assets/images/locationicon.png";
+  static const String arrowRight = "assets/images/arrow.png";
 }

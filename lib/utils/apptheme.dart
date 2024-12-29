@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class Apptheme {
   static final ThemeData lightTheme = ThemeData(
-    scaffoldBackgroundColor: AppColor.whiteColor,
+      scaffoldBackgroundColor: AppColor.whiteColor,
       primaryColor: AppColor.primarylLight,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: AppColor.whiteColor,
@@ -16,7 +16,9 @@ class Apptheme {
             borderRadius: BorderRadius.circular(50)),
         backgroundColor: AppColor.primarylLight,
       ),
-      appBarTheme: const AppBarTheme(backgroundColor: AppColor.primarylLight));
+      appBarTheme: const AppBarTheme(
+          backgroundColor: AppColor.primarylLight,
+          iconTheme: IconThemeData(color: AppColor.primarylLight)));
 
   static final ThemeData darkTheme = ThemeData(
       scaffoldBackgroundColor: AppColor.primaryDark,
@@ -32,5 +34,7 @@ class Apptheme {
             borderRadius: BorderRadius.circular(50)),
         backgroundColor: AppColor.primaryDark,
       ),
-      appBarTheme: const AppBarTheme(backgroundColor: AppColor.primaryDark));
+      appBarTheme: const AppBarTheme(
+          backgroundColor: AppColor.primaryDark,
+          iconTheme: IconThemeData(color: AppColor.primarylLight)));
 }

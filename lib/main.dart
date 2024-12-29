@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eventplanningapp/addevent/add_event_screen.dart';
 import 'package:eventplanningapp/auth/login/login_screen.dart';
 import 'package:eventplanningapp/auth/signup/register_screen.dart';
 import 'package:eventplanningapp/homescreen.dart';
 import 'package:eventplanningapp/providers/apptheme_provider.dart';
 import 'package:eventplanningapp/providers/language_provider.dart';
 import 'package:eventplanningapp/services.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:eventplanningapp/utils/apptheme.dart';
 import 'package:eventplanningapp/onboarding/onboarding.dart';
@@ -12,6 +16,10 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebaseFirestore.instance.disableNetwork();
   await MyServices.init();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
@@ -43,9 +51,10 @@ class MyApp extends StatelessWidget {
         OnBoarding.routename: (context) => OnBoarding(),
         LoginScreen.routename: (context) => LoginScreen(),
         RegisterScreen.routename: (context) => RegisterScreen(),
+        AddEventScreen.routename: (context) => AddEventScreen(),
       },
       initialRoute: MyServices.getString("step") == "1"
-          ? HomeScreen.routename
+          ? LoginScreen.routename
           : OnBoarding.routename,
     );
   }

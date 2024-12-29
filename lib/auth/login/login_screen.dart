@@ -37,6 +37,7 @@ class LoginScreen extends StatelessWidget {
               height: screenSize.height * 0.015,
             ),
             CustomTextFormField(
+              maxLines: 1,
               hintText: AppLocalizations.of(context)!.password,
               prefixIcon: Image.asset(ImageAssets.passwordicon),
               suffixIcon: IconButton(
@@ -47,6 +48,7 @@ class LoginScreen extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   fontFamily: FontsName.inter),
+                  
               obscureText: true,
             ),
             Row(

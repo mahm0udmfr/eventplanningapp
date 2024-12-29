@@ -10,6 +10,7 @@
   "love":"المفضلة",
   "profile":"بروفايل",
   "welcome":"✨مرحبا بعودتك",
+  "all":"الكل",
   "sport":"رياضة",
   "birthday":"عيد ميلاد",
   "meeting":"مقابلة",
@@ -32,5 +33,17 @@
   "name":"الاسم",
   "repassword":"أعد كتابة كلمة المرور",
   "already_have_account":"هل لديك حساب بالفعل ؟",
-  "register":"تسجيل"
+  "register":"تسجيل",
+  "create_event":"إنشاء حدث",
+  "title":"العنوان",
+  "event_title":"عنوان الحدث",
+  "description":"الوصف",
+  "event_description":"وصف الحدث",
+  "event_date":"تاريخ الحدث",
+  "choose_date":"اختيار التاريخ",
+  "event_time":"اختيار الوقت",
+  "choose_time":"اختيار الوقت",
+  "location":"الموقع",
+  "choose_event_location":"اختيار موقع الحدث",
+  "add_event":"إضافة حدث"
 }

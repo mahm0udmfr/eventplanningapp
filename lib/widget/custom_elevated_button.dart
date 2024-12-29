@@ -6,6 +6,7 @@ class CustomElevatedButton extends StatelessWidget {
   String text;
   Color? backgroundColor;
   Widget? prefixIconButton;
+  Widget? suffixIconButton;
   bool center = true;
   void Function()? onPressed;
   TextStyle? textStyle;
@@ -16,15 +17,17 @@ class CustomElevatedButton extends StatelessWidget {
       this.prefixIconButton,
       required this.center,
       required this.onPressed,
-      this.textStyle});
+      this.textStyle,
+      this.suffixIconButton});
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16),side: BorderSide(width: 2,color: AppColor.primarylLight)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(width: 2, color: AppColor.primarylLight)),
             backgroundColor: backgroundColor ?? AppColor.primarylLight,
             padding: EdgeInsets.symmetric(
                 horizontal: screenSize.width * 0.04,
@@ -45,6 +48,8 @@ class CustomElevatedButton extends StatelessWidget {
                       fontSize: 20,
                       fontFamily: FontsName.inter,
                     )),
+            center ? SizedBox() : Spacer(),
+            suffixIconButton ?? SizedBox(),
           ],
         ));
   }

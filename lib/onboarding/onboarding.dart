@@ -1,7 +1,7 @@
+import 'package:eventplanningapp/auth/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
-import 'package:eventplanningapp/homescreen.dart';
 import 'package:eventplanningapp/onboarding/onboardinglist.dart';
 import 'package:eventplanningapp/services.dart';
 
@@ -147,7 +147,7 @@ Text(
         );
       } else {
         MyServices.setString('step', '1');
-        Navigator.of(context).pushReplacementNamed(HomeScreen.routename);
+        Navigator.of(context).pushReplacementNamed(LoginScreen.routename);
       }
     });
   }

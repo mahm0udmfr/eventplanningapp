@@ -1,3 +1,4 @@
+import 'package:eventplanningapp/addevent/add_event_screen.dart';
 import 'package:eventplanningapp/favoritescreen/favoritescreen.dart';
 import 'package:eventplanningapp/home/home_page.dart';
 import 'package:eventplanningapp/profilescreen/profilescreen.dart';
@@ -33,7 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            //open add events screen
+
+            Navigator.of(context).pushNamed(AddEventScreen.routename);
+          },
           child: Icon(
             Icons.add,
             color: AppColor.whiteColor,

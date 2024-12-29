@@ -9,6 +9,9 @@ class CustomTextFormField extends StatelessWidget {
   TextStyle? hintStyle;
   TextStyle? style;
   bool obscureText;
+  int? maxLines;
+  String? Function(String?)? validator;
+  TextEditingController? controller;
   CustomTextFormField(
       {super.key,
       this.borderColor,
@@ -17,19 +20,26 @@ class CustomTextFormField extends StatelessWidget {
       this.prefixIcon,
       this.suffixIcon,
       this.style,
-      this.obscureText = false});
+      this.obscureText = false,
+      this.maxLines,
+      this.validator,
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
+      validator: validator,
+      maxLines: maxLines,
       obscureText: obscureText,
       obscuringCharacter: "*",
       cursorColor: AppColor.blackColor,
       style: style ??
           TextStyle(
-              color: AppColor.blackColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w500),
+            color: AppColor.blackColor,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),

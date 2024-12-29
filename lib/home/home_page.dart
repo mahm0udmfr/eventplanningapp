@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     var themeProvider = Provider.of<AppthemeProvider>(context);
 
     List<String> eventsNameList = [
+      AppLocalizations.of(context)!.all,
       AppLocalizations.of(context)!.sport,
       AppLocalizations.of(context)!.birthday,
       AppLocalizations.of(context)!.meeting,
@@ -149,7 +150,13 @@ class _HomePageState extends State<HomePage> {
                     return TabEventWidget(
                         eventName: eventname,
                         isSelected:
-                            selectedIndex == eventsNameList.indexOf(eventname));
+                            selectedIndex == eventsNameList.indexOf(eventname), backGroundColor: AppColor.whiteColor, textSelectedStyle: TextStyle(
+                    color: AppColor.primarylLight,
+                    fontFamily: FontsName.inter,
+                    fontSize: 16), textUnSelectedStyle: TextStyle(
+                    color: AppColor.whiteColor,
+                    fontFamily: FontsName.inter,
+                    fontSize: 16),);
                   }).toList()),
             )
           ],
