@@ -18,4 +18,11 @@ class FirebaseUtils {
     event.id = docRef.id;
     return docRef.set(event);
   }
+
+  static Future<void> updateEventCollectiont(
+      Event event, bool favstate) {
+    var collection = getEventCollection();
+    var docRef = collection.doc(event.id);
+    return docRef.update({'isFavorite': favstate});
+  }
 }

@@ -55,6 +55,7 @@ class RegisterScreen extends StatelessWidget {
                 height: screenSize.height * 0.015,
               ),
               CustomTextFormField(
+                maxLines: 1,
                 hintText: AppLocalizations.of(context)!.password,
                 prefixIcon: Image.asset(ImageAssets.passwordicon),
                 suffixIcon: IconButton(
@@ -71,6 +72,7 @@ class RegisterScreen extends StatelessWidget {
                 height: screenSize.height * 0.015,
               ),
               CustomTextFormField(
+                maxLines: 1,
                 hintText: AppLocalizations.of(context)!.repassword,
                 prefixIcon: Image.asset(ImageAssets.passwordicon),
                 suffixIcon: IconButton(

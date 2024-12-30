@@ -30,7 +30,7 @@ class Event {
       'eventName': eventName,
       'dateTime': dateTime.millisecondsSinceEpoch,
       'time': time,
-      'isFavorite': title,
+      'isFavorite': isFavorite,
     };
   }
 
@@ -43,5 +43,5 @@ class Event {
             eventName: data['eventName'] as String,
             dateTime: DateTime.fromMillisecondsSinceEpoch(data['dateTime']),
             time: data['time'] as String,
-            isFavorite: data['isFavorite'] as bool);
+            isFavorite: data['isFavorite']as bool);
 }

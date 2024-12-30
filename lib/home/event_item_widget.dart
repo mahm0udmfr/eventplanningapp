@@ -1,9 +1,13 @@
+import 'package:eventplanningapp/models/event.dart';
 import 'package:eventplanningapp/utils/colors.dart';
-import 'package:eventplanningapp/utils/imageassets.dart';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EventItemWidget extends StatelessWidget {
-  const EventItemWidget({super.key});
+  Event event;
+  void Function()? onTap;
+  EventItemWidget({super.key, required this.event,required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,7 @@ class EventItemWidget extends StatelessWidget {
           border: Border.all(color: AppColor.primarylLight, width: 2),
           borderRadius: BorderRadius.circular(20),
           image: DecorationImage(
-            image: AssetImage(ImageAssets.birthdayimage),
+            image: AssetImage(event.image),
             fit: BoxFit.fill,
           )),
       child: Column(
@@ -32,14 +36,14 @@ class EventItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "22",
+                  "${event.dateTime.day}",
                   style: TextStyle(
                       color: AppColor.primarylLight,
                       fontWeight: FontWeight.bold,
                       fontSize: 20),
                 ),
                 Text(
-                  "Nov.",
+                  DateFormat("MMM").format(event.dateTime),
                   style: TextStyle(
                       color: AppColor.primarylLight,
                       fontWeight: FontWeight.bold,
@@ -49,25 +53,37 @@ class EventItemWidget extends StatelessWidget {
             ),
           ),
           Container(
-              margin: EdgeInsets.all(10),
-            padding: EdgeInsets.symmetric(horizontal: screenSize.width*0.02, vertical: screenSize.height*0.012),
+            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.symmetric(
+                horizontal: screenSize.width * 0.02,
+                vertical: screenSize.height * 0.012),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: AppColor.whiteColor,
             ),
             child: Row(
-          
               children: [
                 Expanded(
                   child: Text(
-                    "This is a Birthday Party ",
+                    event.title,
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: AppColor.blackColor),
                   ),
                 ),
-                Icon(Icons.favorite,color: AppColor.primarylLight,)
+                InkWell(
+                  onTap: onTap,
+                  child: event.isFavorite
+                      ? Icon(
+                          Icons.favorite,
+                          color: AppColor.primarylLight,
+                        )
+                      : Icon(
+                          Icons.favorite_border_outlined,
+                          color: AppColor.primarylLight,
+                        ),
+                ),
               ],
             ),
           )

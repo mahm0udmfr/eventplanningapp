@@ -1,7 +1,7 @@
 import 'package:eventplanningapp/firebase_utils.dart';
-import 'package:eventplanningapp/home/home_page.dart';
 import 'package:eventplanningapp/home/tab_event_widget.dart';
 import 'package:eventplanningapp/models/event.dart';
+import 'package:eventplanningapp/providers/event_list_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
 import 'package:eventplanningapp/utils/imageassets.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class AddEventScreen extends StatefulWidget {
   static const String routename = "AddEventScreen";
@@ -31,9 +32,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
   TimeOfDay? selectedTime;
   var titleController = TextEditingController();
   var discriptionController = TextEditingController();
-
+  late EventListProvider eventListProvider;
   @override
   Widget build(BuildContext context) {
+    eventListProvider = Provider.of<EventListProvider>(context);
     Size screenSize = MediaQuery.of(context).size;
     List<String> eventsNameList = [
       AppLocalizations.of(context)!.sport,
@@ -58,7 +60,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
       ImageAssets.eating
     ];
 
-    selectedImage = imageSelectedNameList[selectedIndex];
+    selectedImage = imageSelectedNameList[eventListProvider.selectedIndex];
     // selectedEvent = eventsNameList[selectedIndex];
 
     return Scaffold(
@@ -107,14 +109,14 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          selectedIndex = index;
+                          eventListProvider.selectedIndex = index;
                           selectedEvent = eventsNameList[index];
                           setState(() {});
                         },
                         child: TabEventWidget(
                           bordercolor: AppColor.primarylLight,
                           eventName: eventsNameList[index],
-                          isSelected: selectedIndex == index,
+                          isSelected: eventListProvider.selectedIndex == index,
                           backGroundColor: AppColor.primarylLight,
                           textSelectedStyle: TextStyle(
                               color: AppColor.whiteColor,
@@ -301,16 +303,24 @@ class _AddEventScreenState extends State<AddEventScreen> {
           eventName: selectedEvent,
           dateTime: selectedDate!,
           time: selectedTime!.format(context));
-      FirebaseUtils.addEventToFireStore(event).timeout(Duration(milliseconds:500 ),onTimeout: () {
-              Fluttertoast.showToast(
-            msg: "Data Saved",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.green,
-            textColor: Colors.red,
-            fontSize: 16.0);
-      },);
+      FirebaseUtils.addEventToFireStore(event).timeout(
+        Duration(milliseconds: 500),
+        onTimeout: () {
+          
+          eventListProvider.getAllEvents();
+          
+          Fluttertoast.showToast(
+              msg: "Data Saved",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.red,
+              fontSize: 16.0);
+        },
+        
+      );
+      Navigator.pop(context);
     }
   }
 

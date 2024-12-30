@@ -1,6 +1,7 @@
 import 'package:eventplanningapp/home/event_item_widget.dart';
 import 'package:eventplanningapp/home/tab_event_widget.dart';
 import 'package:eventplanningapp/providers/apptheme_provider.dart';
+import 'package:eventplanningapp/providers/event_list_provider.dart';
 import 'package:eventplanningapp/providers/language_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
@@ -9,34 +10,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-int selectedIndex = 0;
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     var languageProvider = Provider.of<LanguageProvider>(context);
     var themeProvider = Provider.of<AppthemeProvider>(context);
+    var eventListProvider = Provider.of<EventListProvider>(context);
 
-    List<String> eventsNameList = [
-      AppLocalizations.of(context)!.all,
-      AppLocalizations.of(context)!.sport,
-      AppLocalizations.of(context)!.birthday,
-      AppLocalizations.of(context)!.meeting,
-      AppLocalizations.of(context)!.gaming,
-      AppLocalizations.of(context)!.workShop,
-      AppLocalizations.of(context)!.bookClub,
-      AppLocalizations.of(context)!.exhibition,
-      AppLocalizations.of(context)!.holiday,
-      AppLocalizations.of(context)!.eating
-    ];
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: screenSize.height * 0.20,
@@ -133,12 +116,12 @@ class _HomePageState extends State<HomePage> {
               height: screenSize.height * 0.02,
             ),
             DefaultTabController(
-              length: eventsNameList.length,
-              initialIndex: selectedIndex,
+              length: eventListProvider.getEventsNameList(context).length,
+              initialIndex: eventListProvider.selectedIndex,
               child: TabBar(
                   onTap: (value) {
-                    selectedIndex = value;
-                    setState(() {});
+                    // eventListProvider.selectedIndex = value;
+                    eventListProvider.changeSelectedIndex(value, context);
                   },
                   isScrollable: true,
                   dividerColor: AppColor.transparentColor,
@@ -146,30 +129,50 @@ class _HomePageState extends State<HomePage> {
                   tabAlignment: TabAlignment.start,
                   labelPadding:
                       EdgeInsets.symmetric(horizontal: screenSize.width * 0.01),
-                  tabs: eventsNameList.map((eventname) {
+                  tabs: eventListProvider
+                      .getEventsNameList(context)
+                      .map((eventname) {
                     return TabEventWidget(
-                        eventName: eventname,
-                        isSelected:
-                            selectedIndex == eventsNameList.indexOf(eventname), backGroundColor: AppColor.whiteColor, textSelectedStyle: TextStyle(
-                    color: AppColor.primarylLight,
-                    fontFamily: FontsName.inter,
-                    fontSize: 16), textUnSelectedStyle: TextStyle(
-                    color: AppColor.whiteColor,
-                    fontFamily: FontsName.inter,
-                    fontSize: 16),);
+                      eventName: eventname,
+                      isSelected: eventListProvider.selectedIndex ==
+                          eventListProvider
+                              .getEventsNameList(context)
+                              .indexOf(eventname),
+                      backGroundColor: AppColor.whiteColor,
+                      textSelectedStyle: TextStyle(
+                          color: AppColor.primarylLight,
+                          fontFamily: FontsName.inter,
+                          fontSize: 16),
+                      textUnSelectedStyle: TextStyle(
+                          color: AppColor.whiteColor,
+                          fontFamily: FontsName.inter,
+                          fontSize: 16),
+                    );
                   }).toList()),
             )
           ],
         ),
       ),
       body: Padding(
-        padding:  EdgeInsets.symmetric(horizontal:screenSize.width*0.02,),
-        child: ListView.builder(
-          itemCount: 20,
-          itemBuilder: (context, index) {
-            return EventItemWidget();
-          },
+        padding: EdgeInsets.symmetric(
+          horizontal: screenSize.width * 0.02,
         ),
+        child: eventListProvider.eventList.isEmpty
+            ? Center(
+                child: Text("No Events In Yet"),
+              )
+            : ListView.builder(
+                itemCount: eventListProvider.eventList.length,
+                itemBuilder: (context, index) {
+                  return EventItemWidget(
+                    event: eventListProvider.eventList[index],
+                    onTap: () {
+                      eventListProvider
+                          .updateFavorite(eventListProvider.eventList[index]);
+                    },
+                  );
+                },
+              ),
       ),
     );
   }
