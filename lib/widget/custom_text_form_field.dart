@@ -12,6 +12,7 @@ class CustomTextFormField extends StatelessWidget {
   int? maxLines;
   String? Function(String?)? validator;
   TextEditingController? controller;
+  TextInputType? keyboardType;
   CustomTextFormField(
       {super.key,
       this.borderColor,
@@ -23,7 +24,8 @@ class CustomTextFormField extends StatelessWidget {
       this.obscureText = false,
       this.maxLines,
       this.validator,
-      this.controller});
+      this.controller,
+      this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       validator: validator,
       maxLines: maxLines,
+      keyboardType: keyboardType,
       obscureText: obscureText,
       obscuringCharacter: "*",
       cursorColor: AppColor.blackColor,

@@ -24,7 +24,6 @@ class AddEventScreen extends StatefulWidget {
 }
 
 class _AddEventScreenState extends State<AddEventScreen> {
-  int isSelected = 0;
   String selectedEvent = 'sport';
   String selectedImage = '';
   final formKey = GlobalKey<FormState>();
@@ -302,13 +301,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
           image: selectedImage,
           eventName: selectedEvent,
           dateTime: selectedDate!,
-          time: selectedTime!.format(context));
+          time: selectedTime!.format(context),
+          selectedCatId: eventListProvider.selectedIndex + 1);
       FirebaseUtils.addEventToFireStore(event).timeout(
         Duration(milliseconds: 500),
         onTimeout: () {
-          
           eventListProvider.getAllEvents();
-          
+
           Fluttertoast.showToast(
               msg: "Data Saved",
               toastLength: Toast.LENGTH_LONG,
@@ -318,7 +317,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
               textColor: Colors.red,
               fontSize: 16.0);
         },
-        
       );
       Navigator.pop(context);
     }

@@ -1,17 +1,23 @@
 import 'package:eventplanningapp/auth/signup/register_screen.dart';
 import 'package:eventplanningapp/homescreen.dart';
 import 'package:eventplanningapp/utils/colors.dart';
+import 'package:eventplanningapp/utils/dialog_utils.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
 import 'package:eventplanningapp/utils/imageassets.dart';
 import 'package:eventplanningapp/widget/custom_elevated_button.dart';
 import 'package:eventplanningapp/widget/custom_text_form_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routename = "loginscreen";
-  const LoginScreen({super.key});
+  var emailController = TextEditingController(text: 'look.mahmoud172@gmail.com');
+  var passwordController = TextEditingController(text: '123456');
+  final formKey = GlobalKey<FormState>();
+  bool obsecure = true;
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,141 +25,202 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.03),
-        child: Column(
-          children: [
-            Image.asset(
-              ImageAssets.logo,
-              height: screenSize.height * 0.30,
-            ),
-            CustomTextFormField(
-              hintText: AppLocalizations.of(context)!.email,
-              prefixIcon: Image.asset(ImageAssets.emailicon),
-              hintStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: FontsName.inter),
-            ),
-            SizedBox(
-              height: screenSize.height * 0.015,
-            ),
-            CustomTextFormField(
-              maxLines: 1,
-              hintText: AppLocalizations.of(context)!.password,
-              prefixIcon: Image.asset(ImageAssets.passwordicon),
-              suffixIcon: IconButton(
-                onPressed: () {},
-                icon: Image(image: AssetImage(ImageAssets.hidepasswordicon)),
-              ),
-              hintStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: FontsName.inter),
-                  
-              obscureText: true,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+        child: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
               children: [
-                TextButton(
+                Image.asset(
+                  ImageAssets.logo,
+                  height: screenSize.height * 0.30,
+                ),
+                CustomTextFormField(
+                  hintText: AppLocalizations.of(context)!.email,
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (text) {
+                    if (text == null || text.isEmpty) {
+                      return "Please Enter Email Address";
+                    }
+
+                    final bool emailValid = RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(text);
+                    if (!emailValid) {
+                      return "Please Enter a Valid Email Address";
+                    }
+                    return null;
+                  },
+                  prefixIcon: Image.asset(ImageAssets.emailicon),
+                  hintStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: FontsName.inter),
+                ),
+                SizedBox(
+                  height: screenSize.height * 0.015,
+                ),
+                CustomTextFormField(
+                  controller: passwordController,
+                  keyboardType: TextInputType.number,
+                  validator: (text) {
+                    if (text == null || text.trim().isEmpty) {
+                      return "please enter Password";
+                    }
+                    if (passwordController.text.length < 6) {
+                      return "please enter Minimum 6 Chars";
+                    }
+                    return null;
+                  },
+                  maxLines: 1,
+                  hintText: AppLocalizations.of(context)!.password,
+                  prefixIcon: Image.asset(ImageAssets.passwordicon),
+                  suffixIcon: IconButton(
                     onPressed: () {
-                      //gotoforgetpassword
+                      obsecure != obsecure;
                     },
-                    child: Text(
-                      AppLocalizations.of(context)!.forgetpassword,
+                    icon:
+                        Image(image: AssetImage(ImageAssets.hidepasswordicon)),
+                  ),
+                  hintStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: FontsName.inter),
+                  obscureText: obsecure,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          //gotoforgetpassword
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.forgetpassword,
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: AppColor.primarylLight,
+                            fontSize: 16,
+                            fontFamily: FontsName.inter,
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        )),
+                  ],
+                ),
+                CustomElevatedButton(
+                  text: AppLocalizations.of(context)!.login,
+                  center: true,
+                  onPressed: () {
+                    login(context);
+                  },
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.dont_have_account,
                       style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: AppColor.primarylLight,
                         fontSize: 16,
                         fontFamily: FontsName.inter,
                         fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
                       ),
-                    )),
-              ],
-            ),
-            CustomElevatedButton(
-              text: AppLocalizations.of(context)!.login,
-              center: true,
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    HomeScreen.routename, (Route<dynamic> route) => false);
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.dont_have_account,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: FontsName.inter,
-                    fontWeight: FontWeight.bold,
-                  ),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          //gotoRegisterScreen
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              RegisterScreen.routename,
+                              (Route<dynamic> route) => false);
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.create_account,
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: AppColor.primarylLight,
+                            fontSize: 16,
+                            fontFamily: FontsName.inter,
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        )),
+                  ],
                 ),
-                TextButton(
-                    onPressed: () {
-                      //gotoRegisterScreen
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          RegisterScreen.routename,
-                          (Route<dynamic> route) => false);
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.create_account,
+                Row(
+                  children: [
+                    Expanded(
+                        child: Divider(
+                      color: AppColor.primarylLight,
+                      endIndent: screenSize.width * 0.02,
+                      indent: screenSize.width * 0.03,
+                      thickness: 2,
+                    )),
+                    Text(
+                      AppLocalizations.of(context)!.or,
                       style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: AppColor.primarylLight,
                         fontSize: 16,
                         fontFamily: FontsName.inter,
                         fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
                       ),
+                    ),
+                    Expanded(
+                        child: Divider(
+                      color: AppColor.primarylLight,
+                      endIndent: screenSize.width * 0.03,
+                      indent: screenSize.width * 0.02,
+                      thickness: 2,
                     )),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                    child: Divider(
-                  color: AppColor.primarylLight,
-                  endIndent: screenSize.width * 0.02,
-                  indent: screenSize.width * 0.03,
-                  thickness: 2,
-                )),
-                Text(
-                  AppLocalizations.of(context)!.or,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: FontsName.inter,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  ],
                 ),
-                Expanded(
-                    child: Divider(
-                  color: AppColor.primarylLight,
-                  endIndent: screenSize.width * 0.03,
-                  indent: screenSize.width * 0.02,
-                  thickness: 2,
-                )),
+                SizedBox(
+                  height: screenSize.height * 0.02,
+                ),
+                CustomElevatedButton(
+                  text: AppLocalizations.of(context)!.login_with_google,
+                  textStyle: TextStyle(
+                    color: AppColor.primarylLight,
+                    fontSize: 20,
+                    fontFamily: FontsName.inter,
+                  ),
+                  prefixIconButton: Image.asset(ImageAssets.googleicon),
+                  backgroundColor: AppColor.whiteColor,
+                  center: true,
+                  onPressed: () {},
+                ),
               ],
             ),
-            SizedBox(
-              height: screenSize.height * 0.02,
-            ),
-            CustomElevatedButton(
-              text: AppLocalizations.of(context)!.login_with_google,
-              textStyle: TextStyle(
-                color: AppColor.primarylLight,
-                fontSize: 20,
-                fontFamily: FontsName.inter,
-              ),
-              prefixIconButton: Image.asset(ImageAssets.googleicon),
-              backgroundColor: AppColor.whiteColor,
-              center: true,
-              onPressed: () {},
-            ),
-          ],
+          ),
         ),
       ),
     );
+  }
+
+  void login(BuildContext context) async {
+    if (formKey.currentState!.validate() == true) {
+      DialogUtils.showLoading(context: context, message: 'Loading...');
+      try {
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: emailController.text, password: passwordController.text);
+        DialogUtils.hideLoading(context);
+
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            HomeScreen.routename, (Route<dynamic> route) => false);
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          DialogUtils.hideLoading(context);
+          DialogUtils.showMessage(
+              context: context, message: 'No user found for that email.');
+        } else if (e.code == 'wrong-password') {
+          DialogUtils.hideLoading(context);
+          DialogUtils.showMessage(
+              context: context,
+              message: 'Wrong password provided for that user.');
+        }
+      } catch (e) {
+        DialogUtils.hideLoading(context);
+        DialogUtils.showMessage(context: context, message: e.toString());
+      }
+    }
   }
 }

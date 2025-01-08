@@ -57,8 +57,8 @@ class EventListProvider extends ChangeNotifier {
     QuerySnapshot<Event> querySnapshot =
         await FirebaseUtils.getEventCollection()
             .orderBy('dateTime', descending: false)
-            .where('eventName',
-                isEqualTo: getEventsNameList(context)[selectedIndex])
+            .where('selectedCatId',
+                isEqualTo: selectedIndex)
             .get();
     eventList = querySnapshot.docs.map((doc) {
       return doc.data();

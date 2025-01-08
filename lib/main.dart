@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:eventplanningapp/addevent/add_event_screen.dart';
 import 'package:eventplanningapp/auth/login/login_screen.dart';
 import 'package:eventplanningapp/auth/signup/register_screen.dart';
@@ -20,7 +20,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseFirestore.instance.disableNetwork();
+  // await FirebaseFirestore.instance.disableNetwork();
   await MyServices.init();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(

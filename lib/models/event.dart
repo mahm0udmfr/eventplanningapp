@@ -1,4 +1,3 @@
-
 class Event {
   //data class //Model
   static const String collectionName = 'Events';
@@ -10,6 +9,7 @@ class Event {
   DateTime dateTime;
   String time;
   bool isFavorite;
+  int selectedCatId;
 
   Event(
       {this.id = '',
@@ -19,7 +19,8 @@ class Event {
       required this.eventName,
       required this.dateTime,
       required this.time,
-      this.isFavorite = false});
+      this.isFavorite = false,
+      required this.selectedCatId});
 
   Map<String, dynamic> toFirestore() {
     return {
@@ -31,6 +32,7 @@ class Event {
       'dateTime': dateTime.millisecondsSinceEpoch,
       'time': time,
       'isFavorite': isFavorite,
+      'selectedCatId': selectedCatId,
     };
   }
 
@@ -39,9 +41,10 @@ class Event {
             id: data!['id'] as String,
             title: data['title'] as String,
             discription: data['discription'] as String,
-            image: data['image']as String,
+            image: data['image'] as String,
             eventName: data['eventName'] as String,
             dateTime: DateTime.fromMillisecondsSinceEpoch(data['dateTime']),
             time: data['time'] as String,
-            isFavorite: data['isFavorite']as bool);
+            isFavorite: data['isFavorite'] as bool,
+            selectedCatId: data['selectedCatId'] as int);
 }
