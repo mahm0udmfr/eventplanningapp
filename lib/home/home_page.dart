@@ -1,3 +1,4 @@
+import 'package:eventplanningapp/eventManageScreens/event_details_screen.dart';
 import 'package:eventplanningapp/home/event_item_widget.dart';
 import 'package:eventplanningapp/home/tab_event_widget.dart';
 import 'package:eventplanningapp/providers/apptheme_provider.dart';
@@ -166,12 +167,19 @@ class HomePage extends StatelessWidget {
             : ListView.builder(
                 itemCount: eventListProvider.eventList.length,
                 itemBuilder: (context, index) {
-                  return EventItemWidget(
-                    event: eventListProvider.eventList[index],
+                  return InkWell(
                     onTap: () {
-                      eventListProvider
-                          .updateFavorite(eventListProvider.eventList[index]);
+                      
+                      Navigator.of(context)
+                          .pushNamed(EventDetailsScreen.routename,arguments: eventListProvider.eventList[index]);
                     },
+                    child: EventItemWidget(
+                      event: eventListProvider.eventList[index],
+                      onTap: () {
+                        eventListProvider
+                            .updateFavorite(eventListProvider.eventList[index]);
+                      },
+                    ),
                   );
                 },
               ),

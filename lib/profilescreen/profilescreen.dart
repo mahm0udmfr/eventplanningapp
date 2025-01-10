@@ -8,9 +8,12 @@ import 'package:eventplanningapp/providers/user_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
 import 'package:eventplanningapp/utils/imageassets.dart';
+import 'package:eventplanningapp/utils/show_toast.dart';
 import 'package:eventplanningapp/widget/custom_elevated_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -184,7 +187,8 @@ class ProfileScreen extends StatelessWidget {
               ),
               center: false,
               onPressed: () {
-                eventListProvider.eventList = [];    
+                eventListProvider.eventList = [];
+                signOutFromGoogle();
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     LoginScreen.routename, (Route<dynamic> route) => false);
               },
@@ -196,6 +200,17 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> signOutFromGoogle() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      await GoogleSignIn().signOut();
+      ShowToast.toast("Logged Out.");
+      return true;
+    } on Exception catch (_) {
+      return false;
+    }
   }
 
   void showLanguageBottomShhet(BuildContext context) {

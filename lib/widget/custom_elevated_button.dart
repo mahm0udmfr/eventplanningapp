@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   String text;
+  Widget? secondwidgetUnderText;
   Color? backgroundColor;
   Widget? prefixIconButton;
   Widget? suffixIconButton;
@@ -18,7 +19,8 @@ class CustomElevatedButton extends StatelessWidget {
       required this.center,
       required this.onPressed,
       this.textStyle,
-      this.suffixIconButton});
+      this.suffixIconButton,
+      this.secondwidgetUnderText});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class CustomElevatedButton extends StatelessWidget {
             backgroundColor: backgroundColor ?? AppColor.primarylLight,
             padding: EdgeInsets.symmetric(
                 horizontal: screenSize.width * 0.04,
-                vertical: screenSize.width * 0.05)),
+                vertical: screenSize.height * 0.021)),
         onPressed: onPressed,
         child: Row(
           mainAxisAlignment:
@@ -41,13 +43,19 @@ class CustomElevatedButton extends StatelessWidget {
             SizedBox(
               width: screenSize.width * 0.02,
             ),
-            Text(text,
-                style: textStyle ??
-                    TextStyle(
-                      color: AppColor.whiteColor,
-                      fontSize: 20,
-                      fontFamily: FontsName.inter,
-                    )),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start ,
+              children: [
+                Text(text,
+                    style: textStyle ??
+                        TextStyle(
+                          color: AppColor.whiteColor,
+                          fontSize: 20,
+                          fontFamily: FontsName.inter,
+                        )),
+                secondwidgetUnderText??SizedBox(height: 0,)
+              ],
+            ),
             center ? SizedBox() : Spacer(),
             suffixIconButton ?? SizedBox(),
           ],

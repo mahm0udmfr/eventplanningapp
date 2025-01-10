@@ -6,6 +6,7 @@ import 'package:eventplanningapp/providers/user_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
 import 'package:eventplanningapp/utils/imageassets.dart';
+import 'package:eventplanningapp/utils/show_toast.dart';
 import 'package:eventplanningapp/widget/choose_date_or_time.dart';
 import 'package:eventplanningapp/widget/custom_elevated_button.dart';
 import 'package:eventplanningapp/widget/custom_text_form_field.dart';
@@ -309,15 +310,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
           .then((value) {
         eventListProvider.selectedIndex = 0;
         eventListProvider.getAllEvents();
-
-        Fluttertoast.showToast(
-            msg: "Data Saved",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.green,
-            textColor: Colors.red,
-            fontSize: 16.0);
+        ShowToast.toast("Data Saved");
       }).timeout(
         Duration(milliseconds: 500),
         onTimeout: () {},

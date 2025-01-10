@@ -1,3 +1,4 @@
+import 'package:eventplanningapp/eventManageScreens/event_details_screen.dart';
 import 'package:eventplanningapp/home/event_item_widget.dart';
 import 'package:eventplanningapp/providers/event_list_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
@@ -46,12 +47,19 @@ class FavoriteScreen extends StatelessWidget {
                   : ListView.builder(
                       itemCount: eventListProvider.eventListFavorite.length,
                       itemBuilder: (context, index) {
-                        return EventItemWidget(
-                          event: eventListProvider.eventListFavorite[index],
+                        return InkWell(
                           onTap: () {
-                            eventListProvider.updateFavorite(
-                                eventListProvider.eventList[index]);
+                            
+                      Navigator.of(context)
+                          .pushNamed(EventDetailsScreen.routename,arguments: eventListProvider.eventList[index]);
                           },
+                          child: EventItemWidget(
+                            event: eventListProvider.eventListFavorite[index],
+                            onTap: () {
+                              eventListProvider.updateFavorite(
+                                  eventListProvider.eventList[index]);
+                            },
+                          ),
                         );
                       },
                     ),

@@ -41,5 +41,7 @@ class ImageAssets {
   static const String hidepasswordicon = "assets/images/hidepasswordicon.png";
   static const String googleicon = "assets/images/googleicon.png";
   static const String locationicon = "assets/images/locationicon.png";
+  static const String calenderIconEdit = "assets/images/calendericonedit.png";
   static const String arrowRight = "assets/images/arrow.png";
+  static const String mapfortest = "assets/images/mapfortest.png";
 }

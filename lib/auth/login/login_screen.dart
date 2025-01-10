@@ -1,17 +1,19 @@
 import 'package:eventplanningapp/auth/signup/register_screen.dart';
 import 'package:eventplanningapp/firebase_utils.dart';
 import 'package:eventplanningapp/homescreen.dart';
+import 'package:eventplanningapp/models/users_model.dart';
 import 'package:eventplanningapp/providers/event_list_provider.dart';
 import 'package:eventplanningapp/providers/user_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:eventplanningapp/utils/dialog_utils.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
 import 'package:eventplanningapp/utils/imageassets.dart';
+import 'package:eventplanningapp/utils/show_toast.dart';
 import 'package:eventplanningapp/widget/custom_elevated_button.dart';
 import 'package:eventplanningapp/widget/custom_text_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -194,7 +196,9 @@ class LoginScreen extends StatelessWidget {
                   prefixIconButton: Image.asset(ImageAssets.googleicon),
                   backgroundColor: AppColor.whiteColor,
                   center: true,
-                  onPressed: () {},
+                  onPressed: () {
+                    signInWithGoogle(context);
+                  },
                 ),
               ],
             ),
@@ -245,6 +249,46 @@ class LoginScreen extends StatelessWidget {
         DialogUtils.hideLoading(context);
         DialogUtils.showMessage(context: context, message: e.toString());
       }
+    }
+  }
+
+  Future<void> signInWithGoogle(BuildContext context) async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    DialogUtils.showLoading(context: context, message: 'Loading....');
+    final UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    final User? user = userCredential.user;
+
+    if (user != null) {
+      UsersModel usersmodel =
+          UsersModel(id: user.uid, name: user.displayName!, email: user.email!);
+
+      await FirebaseUtils.addUsersToFireStore(usersmodel).then((value) {
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.updateUser(usersmodel);
+        eventListProvider.uId = usersmodel.id;
+        eventListProvider.changeSelectedIndex(0, context);
+      });
+
+      DialogUtils.hideLoading(context);
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          HomeScreen.routename, (Route<dynamic> route) => false);
+    } else {
+      ShowToast.toast("Sign-in failed");
+      DialogUtils.hideLoading(context);
+      return;
     }
   }
 }

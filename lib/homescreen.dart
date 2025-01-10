@@ -1,4 +1,4 @@
-import 'package:eventplanningapp/addevent/add_event_screen.dart';
+import 'package:eventplanningapp/eventManageScreens/add_event_screen.dart';
 import 'package:eventplanningapp/favoritescreen/favoritescreen.dart';
 import 'package:eventplanningapp/home/home_page.dart';
 import 'package:eventplanningapp/profilescreen/profilescreen.dart';

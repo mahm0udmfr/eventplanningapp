@@ -12,7 +12,20 @@
           "package_name": "com.vision.eventplanningapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "578595838339-l0oue47oc74gt85aqp8ppjearun8htfq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vision.eventplanningapp",
+            "certificate_hash": "548f52326c208a9af55f974c3e4e0df249afaaf4"
+          }
+        },
+        {
+          "client_id": "578595838339-5kqh0mgene048km01chjtc3h85mj4cov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDKoy0BhAIpRd5aRZV3vYCssnAqBnHYa2w"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578595838339-5kqh0mgene048km01chjtc3h85mj4cov.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "578595838339-18004573r75ie2m2hht9tjnn9jh81d4p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vision.eventplanningapp"
+              }
+            }
+          ]
         }
       }
     }
