@@ -1,5 +1,8 @@
 import 'package:eventplanningapp/auth/signup/register_screen.dart';
+import 'package:eventplanningapp/firebase_utils.dart';
 import 'package:eventplanningapp/homescreen.dart';
+import 'package:eventplanningapp/providers/event_list_provider.dart';
+import 'package:eventplanningapp/providers/user_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:eventplanningapp/utils/dialog_utils.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
@@ -10,18 +13,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routename = "loginscreen";
-  var emailController = TextEditingController(text: 'look.mahmoud172@gmail.com');
+  var emailController =
+      TextEditingController(text: 'look.mahmoud172@gmail.com');
   var passwordController = TextEditingController(text: '123456');
   final formKey = GlobalKey<FormState>();
   bool obsecure = true;
+  late UserProvider userProvider;
+  late EventListProvider eventListProvider;
   LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+    userProvider = Provider.of<UserProvider>(context);
+    eventListProvider = Provider.of<EventListProvider>(context);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.03),
@@ -202,6 +211,15 @@ class LoginScreen extends StatelessWidget {
         final credential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
                 email: emailController.text, password: passwordController.text);
+
+        var user = await FirebaseUtils.readUserFromFirestore(
+            credential.user?.uid ?? '');
+        if (user == null) {
+          return;
+        }
+        eventListProvider.uId = user.id;
+        userProvider.updateUser(user);
+        eventListProvider.changeSelectedIndex(0, context);
         DialogUtils.hideLoading(context);
 
         Navigator.of(context).pushNamedAndRemoveUntil(
@@ -216,6 +234,12 @@ class LoginScreen extends StatelessWidget {
           DialogUtils.showMessage(
               context: context,
               message: 'Wrong password provided for that user.');
+        } else if (e.code == 'invalid-credential') {
+          DialogUtils.hideLoading(context);
+          DialogUtils.showMessage(
+              context: context,
+              message: 'Check User Email Or Password.',
+              title: 'Invalid Credential');
         }
       } catch (e) {
         DialogUtils.hideLoading(context);

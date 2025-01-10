@@ -1,4 +1,3 @@
-
 import 'package:eventplanningapp/addevent/add_event_screen.dart';
 import 'package:eventplanningapp/auth/login/login_screen.dart';
 import 'package:eventplanningapp/auth/signup/register_screen.dart';
@@ -6,6 +5,7 @@ import 'package:eventplanningapp/homescreen.dart';
 import 'package:eventplanningapp/providers/apptheme_provider.dart';
 import 'package:eventplanningapp/providers/event_list_provider.dart';
 import 'package:eventplanningapp/providers/language_provider.dart';
+import 'package:eventplanningapp/providers/user_provider.dart';
 import 'package:eventplanningapp/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -29,9 +29,12 @@ void main() async {
     ChangeNotifierProvider(
       create: (context) => AppthemeProvider(),
     ),
-      ChangeNotifierProvider(
+    ChangeNotifierProvider(
       create: (context) => EventListProvider(),
-    )
+    ),
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+    ),
   ], child: const MyApp()));
 }
 

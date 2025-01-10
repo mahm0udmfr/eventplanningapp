@@ -2,7 +2,9 @@ import 'package:eventplanningapp/auth/login/login_screen.dart';
 import 'package:eventplanningapp/profilescreen/language_bottomsheet.dart';
 import 'package:eventplanningapp/profilescreen/theme_bottom_sheet.dart';
 import 'package:eventplanningapp/providers/apptheme_provider.dart';
+import 'package:eventplanningapp/providers/event_list_provider.dart';
 import 'package:eventplanningapp/providers/language_provider.dart';
+import 'package:eventplanningapp/providers/user_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
 import 'package:eventplanningapp/utils/imageassets.dart';
@@ -19,6 +21,8 @@ class ProfileScreen extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
     var languageProvider = Provider.of<LanguageProvider>(context);
     var themeProvider = Provider.of<AppthemeProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
+    var eventListProvider = Provider.of<EventListProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.primarylLight,
@@ -54,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Mahmoud Ramadan",
+                    userProvider.currentUser!.name.toUpperCase(),
                     style: TextStyle(
                       color: AppColor.whiteColor,
                       fontSize: 24,
@@ -64,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "mahmoud.mohamed.ram@gmail.com",
+                    userProvider.currentUser!.email,
                     style: TextStyle(
                       color: AppColor.whiteColor,
                       fontSize: 16,
@@ -180,9 +184,9 @@ class ProfileScreen extends StatelessWidget {
               ),
               center: false,
               onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                            LoginScreen.routename,
-                            (Route<dynamic> route) => false);
+                eventListProvider.eventList = [];    
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    LoginScreen.routename, (Route<dynamic> route) => false);
               },
             ),
             SizedBox(

@@ -2,6 +2,7 @@ import 'package:eventplanningapp/firebase_utils.dart';
 import 'package:eventplanningapp/home/tab_event_widget.dart';
 import 'package:eventplanningapp/models/event.dart';
 import 'package:eventplanningapp/providers/event_list_provider.dart';
+import 'package:eventplanningapp/providers/user_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
 import 'package:eventplanningapp/utils/imageassets.dart';
@@ -303,20 +304,23 @@ class _AddEventScreenState extends State<AddEventScreen> {
           dateTime: selectedDate!,
           time: selectedTime!.format(context),
           selectedCatId: eventListProvider.selectedIndex + 1);
-      FirebaseUtils.addEventToFireStore(event).timeout(
-        Duration(milliseconds: 500),
-        onTimeout: () {
-          eventListProvider.getAllEvents();
+      var userProvider = Provider.of<UserProvider>(context, listen: false);
+      FirebaseUtils.addEventToFireStore(event, userProvider.currentUser!.id)
+          .then((value) {
+        eventListProvider.selectedIndex = 0;
+        eventListProvider.getAllEvents();
 
-          Fluttertoast.showToast(
-              msg: "Data Saved",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.green,
-              textColor: Colors.red,
-              fontSize: 16.0);
-        },
+        Fluttertoast.showToast(
+            msg: "Data Saved",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.red,
+            fontSize: 16.0);
+      }).timeout(
+        Duration(milliseconds: 500),
+        onTimeout: () {},
       );
       Navigator.pop(context);
     }

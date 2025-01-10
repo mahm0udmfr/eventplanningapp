@@ -1,5 +1,9 @@
 import 'package:eventplanningapp/auth/login/login_screen.dart';
+import 'package:eventplanningapp/firebase_utils.dart';
 import 'package:eventplanningapp/homescreen.dart';
+import 'package:eventplanningapp/models/users_model.dart';
+import 'package:eventplanningapp/providers/event_list_provider.dart';
+import 'package:eventplanningapp/providers/user_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:eventplanningapp/utils/dialog_utils.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
@@ -10,6 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
   static const String routename = "RegisterScreen";
@@ -19,10 +24,12 @@ class RegisterScreen extends StatelessWidget {
   var passwordController = TextEditingController(text: '123456');
   var rePasswordController = TextEditingController(text: '123456');
   final formKey = GlobalKey<FormState>();
+  late EventListProvider eventListProvider;
   RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    eventListProvider = Provider.of<EventListProvider>(context);
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -201,8 +208,15 @@ class RegisterScreen extends StatelessWidget {
           email: emailController.text,
           password: passwordController.text,
         );
-        print("success register");
-        print(credential.user?.uid ?? "");
+        UsersModel usersmodel = UsersModel(
+            id: credential.user?.uid ?? "",
+            name: nameController.text,
+            email: emailController.text);
+        await FirebaseUtils.addUsersToFireStore(usersmodel);
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.updateUser(usersmodel);
+        eventListProvider.uId = usersmodel.id;
+        eventListProvider.changeSelectedIndex(0, context);
         DialogUtils.hideLoading(context);
         Navigator.of(context).pushNamedAndRemoveUntil(
             HomeScreen.routename, (Route<dynamic> route) => false);

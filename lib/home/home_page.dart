@@ -3,6 +3,7 @@ import 'package:eventplanningapp/home/tab_event_widget.dart';
 import 'package:eventplanningapp/providers/apptheme_provider.dart';
 import 'package:eventplanningapp/providers/event_list_provider.dart';
 import 'package:eventplanningapp/providers/language_provider.dart';
+import 'package:eventplanningapp/providers/user_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
 import 'package:eventplanningapp/utils/imageassets.dart';
@@ -19,6 +20,7 @@ class HomePage extends StatelessWidget {
     var languageProvider = Provider.of<LanguageProvider>(context);
     var themeProvider = Provider.of<AppthemeProvider>(context);
     var eventListProvider = Provider.of<EventListProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -45,7 +47,7 @@ class HomePage extends StatelessWidget {
                           fontFamily: FontsName.inter),
                     ),
                     Text(
-                      "Mahmoud Ramadan",
+                      userProvider.currentUser!.name.toUpperCase(),
                       style: TextStyle(
                           color: AppColor.whiteColor,
                           fontSize: 24,

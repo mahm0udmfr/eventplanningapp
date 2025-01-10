@@ -7,11 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:eventplanningapp/utils/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-// import 'package:eventplanningapp/tabs/hadethtab/hadethtab.dart';
-// import 'package:eventplanningapp/tabs/qurantab/qurantab.dart';
-// import 'package:eventplanningapp/tabs/radiotab/radiotab.dart';
-// import 'package:eventplanningapp/tabs/tasbehtab/tasbehtab.dart';
-// import 'package:eventplanningapp/tabs/timetab/timetab.dart';
+
 
 class HomeScreen extends StatefulWidget {
   static const String routename = "homescreen";

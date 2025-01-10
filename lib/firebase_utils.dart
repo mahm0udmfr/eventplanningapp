@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventplanningapp/models/event.dart';
+import 'package:eventplanningapp/models/users_model.dart';
 
 class FirebaseUtils {
-  static CollectionReference<Event> getEventCollection() {
-    return FirebaseFirestore.instance
+  static CollectionReference<Event> getEventCollection(String uId) {
+    return getUsersCollection().doc(uId)
         .collection(Event.collectionName)
         .withConverter(
           fromFirestore: (snapshot, options) =>
@@ -12,17 +13,35 @@ class FirebaseUtils {
         );
   }
 
-  static Future<void> addEventToFireStore(Event event) {
-    var collection = getEventCollection();
+  static CollectionReference<UsersModel> getUsersCollection() {
+    return FirebaseFirestore.instance
+        .collection(UsersModel.collectionName)
+        .withConverter(
+          fromFirestore: (snapshot, options) =>
+              UsersModel.fromFireStore(snapshot.data()),
+          toFirestore: (value, _) => value.toFirestore(),
+        );
+  }
+
+  static Future<void> addEventToFireStore(Event event,String uId) {
+    var collection = getEventCollection(uId);
     var docRef = collection.doc();
     event.id = docRef.id;
     return docRef.set(event);
   }
 
-  static Future<void> updateEventCollectiont(
-      Event event, bool favstate) {
-    var collection = getEventCollection();
+  static Future<void> updateEventCollectiont(Event event, bool favstate,String uId) {
+    var collection = getEventCollection(uId);
     var docRef = collection.doc(event.id);
     return docRef.update({'isFavorite': favstate});
+  }
+
+  static Future<void> addUsersToFireStore(UsersModel usersmodel) {
+    return getUsersCollection().doc(usersmodel.id).set(usersmodel);
+  }
+
+  static Future<UsersModel?> readUserFromFirestore(String userId) async {
+    var quereSnapShot = await getUsersCollection().doc(userId).get();
+  return  quereSnapShot.data();
   }
 }

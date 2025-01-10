@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EventListProvider extends ChangeNotifier {
+  late String uId;
+
   EventListProvider() {
     getAllEvents();
     getFavoriteEvents();
@@ -31,7 +33,7 @@ class EventListProvider extends ChangeNotifier {
 
   void getAllEvents() async {
     QuerySnapshot<Event> querySnapshot =
-        await FirebaseUtils.getEventCollection()
+        await FirebaseUtils.getEventCollection(uId)
             .orderBy('dateTime', descending: false)
             .get();
     eventList = querySnapshot.docs.map((doc) {
@@ -42,7 +44,7 @@ class EventListProvider extends ChangeNotifier {
 
   void getFavoriteEvents() async {
     QuerySnapshot<Event> querySnapshot =
-        await FirebaseUtils.getEventCollection()
+        await FirebaseUtils.getEventCollection(uId)
             .orderBy('dateTime', descending: false)
             .where('isFavorite', isEqualTo: true)
             .get();
@@ -55,10 +57,9 @@ class EventListProvider extends ChangeNotifier {
 
   void getFilterEvents(BuildContext context) async {
     QuerySnapshot<Event> querySnapshot =
-        await FirebaseUtils.getEventCollection()
+        await FirebaseUtils.getEventCollection(uId)
             .orderBy('dateTime', descending: false)
-            .where('selectedCatId',
-                isEqualTo: selectedIndex)
+            .where('selectedCatId', isEqualTo: selectedIndex)
             .get();
     eventList = querySnapshot.docs.map((doc) {
       return doc.data();
@@ -69,18 +70,21 @@ class EventListProvider extends ChangeNotifier {
 
   void updateFavorite(Event event) async {
     FirebaseUtils.updateEventCollectiont(
-        event, event.isFavorite ? false : true);
+        event, event.isFavorite ? false : true, uId);
     getAllEvents();
     getFavoriteEvents();
     notifyListeners();
   }
 
-  void changeSelectedIndex(int newSelectedIndex, BuildContext context) {
+  void changeSelectedIndex(
+      int newSelectedIndex, BuildContext context) {
     selectedIndex = newSelectedIndex;
     if (selectedIndex == 0) {
       getAllEvents();
+      getFavoriteEvents();
     } else {
       getFilterEvents(context);
+
     }
   }
 }
