@@ -11,7 +11,8 @@ class ChooseDateOrTime extends StatelessWidget {
       {super.key,
       required this.chooseTimeorDateText,
       required this.timeOrdatetext,
-      required this.iconPrefix,required this.onTap});
+      required this.iconPrefix,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {

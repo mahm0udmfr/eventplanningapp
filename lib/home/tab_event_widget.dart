@@ -9,9 +9,14 @@ class TabEventWidget extends StatelessWidget {
   TextStyle textSelectedStyle;
   TextStyle textUnSelectedStyle;
 
-
   TabEventWidget(
-      {super.key, required this.eventName, required this.isSelected,required this.backGroundColor,required this.textSelectedStyle,required this.textUnSelectedStyle,this.bordercolor});
+      {super.key,
+      required this.eventName,
+      required this.isSelected,
+      required this.backGroundColor,
+      required this.textSelectedStyle,
+      required this.textUnSelectedStyle,
+      this.bordercolor});
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +28,9 @@ class TabEventWidget extends StatelessWidget {
         decoration: BoxDecoration(
             color: isSelected ? backGroundColor : AppColor.transparentColor,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: bordercolor ?? AppColor.whiteColor, width: 2)),
+            border: Border.all(
+                color: bordercolor ?? AppColor.whiteColor, width: 2)),
         child: Text(eventName,
-            style: isSelected
-                ? textSelectedStyle
-                : textUnSelectedStyle));
+            style: isSelected ? textSelectedStyle : textUnSelectedStyle));
   }
 }

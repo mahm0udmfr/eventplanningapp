@@ -1,11 +1,18 @@
+import 'package:eventplanningapp/eventManageScreens/edit_event_screen.dart';
+import 'package:eventplanningapp/firebase_utils.dart';
 import 'package:eventplanningapp/models/event.dart';
 import 'package:eventplanningapp/providers/event_list_provider.dart';
 import 'package:eventplanningapp/utils/colors.dart';
+import 'package:eventplanningapp/utils/dialog_utils.dart';
 import 'package:eventplanningapp/utils/fontsclass.dart';
 import 'package:eventplanningapp/utils/imageassets.dart';
+import 'package:eventplanningapp/utils/show_toast.dart';
 import 'package:eventplanningapp/widget/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/user_provider.dart';
 
 class EventDetailsScreen extends StatelessWidget {
   static const String routename = "EventScreenDetails";
@@ -13,8 +20,9 @@ class EventDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var eventListProvider = Provider.of<EventListProvider>(context);
     Size screenSize = MediaQuery.of(context).size;
-  
+
     var args = ModalRoute.of(context)!.settings.arguments as Event;
     return Scaffold(
       appBar: AppBar(
@@ -29,27 +37,48 @@ class EventDetailsScreen extends StatelessWidget {
         centerTitle: true,
         actions: [
           InkWell(
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(EditEventScreen.routename, arguments: args);
+              },
               child: Icon(
-            Icons.edit,
-            color: AppColor.primarylLight,
-          )),
+                Icons.edit,
+                color: AppColor.primarylLight,
+              )),
           SizedBox(
             width: screenSize.width * 0.02,
           ),
           InkWell(
+              onTap: () {
+                DialogUtils.showMessage(
+                    context: context,
+                    message: "Are You Sure You Want To Delete This ?",
+                    negActionName: "Cancel",
+                    posActionName: "Yes",
+                    posAction: () {
+                      FirebaseUtils.deleteEvent(args.id, eventListProvider.uId)
+                          .then((value) {
+                        eventListProvider.changeSelectedIndex(0, context);
+                        ShowToast.toast("Event Deleted");
+                      }).timeout(
+                        Duration(milliseconds: 500),
+                        onTimeout: () {},
+                      );
+                      Navigator.pop(context);
+                    });
+              },
               child: Icon(
-            Icons.delete_outline,
-            color: AppColor.redColor,
-          )),
+                Icons.delete_outline,
+                color: AppColor.redColor,
+              )),
         ],
       ),
       body: Padding(
         padding: EdgeInsets.only(
-          right: screenSize.width * 0.02,
-          left: screenSize.width * 0.02,
-          top: screenSize.height * 0.01,
-          bottom: screenSize.height*0.02
-        ),
+            right: screenSize.width * 0.02,
+            left: screenSize.width * 0.02,
+            top: screenSize.height * 0.01,
+            bottom: screenSize.height * 0.02),
         child: SingleChildScrollView(
           child: Column(
             spacing: 16,

@@ -1,6 +1,7 @@
 import 'package:eventplanningapp/eventManageScreens/add_event_screen.dart';
 import 'package:eventplanningapp/auth/login/login_screen.dart';
 import 'package:eventplanningapp/auth/signup/register_screen.dart';
+import 'package:eventplanningapp/eventManageScreens/edit_event_screen.dart';
 import 'package:eventplanningapp/eventManageScreens/event_details_screen.dart';
 import 'package:eventplanningapp/homescreen.dart';
 import 'package:eventplanningapp/providers/apptheme_provider.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
         RegisterScreen.routename: (context) => RegisterScreen(),
         AddEventScreen.routename: (context) => AddEventScreen(),
         EventDetailsScreen.routename: (context) => EventDetailsScreen(),
+        EditEventScreen.routename: (context) => EditEventScreen(),
       },
       initialRoute: MyServices.getString("step") == "1"
           ? LoginScreen.routename

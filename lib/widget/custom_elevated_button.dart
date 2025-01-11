@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   String text;
-  Widget? secondwidgetUnderText;
+   Widget? secondwidgetUnderText;
   Color? backgroundColor;
   Widget? prefixIconButton;
   Widget? suffixIconButton;
