@@ -39,6 +39,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
     eventListProvider = Provider.of<EventListProvider>(context);
     Size screenSize = MediaQuery.of(context).size;
     List<String> eventsNameList = [
+      //9 items
       AppLocalizations.of(context)!.sport,
       AppLocalizations.of(context)!.birthday,
       AppLocalizations.of(context)!.meeting,
@@ -305,6 +306,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
           dateTime: selectedDate!,
           time: selectedTime!.format(context),
           selectedCatId: eventListProvider.selectedIndex + 1);
+
       var userProvider = Provider.of<UserProvider>(context, listen: false);
       FirebaseUtils.addEventToFireStore(event, userProvider.currentUser!.id)
           .then((value) {

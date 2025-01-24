@@ -45,5 +45,6 @@
   "choose_time":"اختيار الوقت",
   "location":"الموقع",
   "choose_event_location":"اختيار موقع الحدث",
-  "add_event":"إضافة حدث"
+  "add_event":"إضافة حدث",
+  "edit_event":"تعديل الحدث"
 }

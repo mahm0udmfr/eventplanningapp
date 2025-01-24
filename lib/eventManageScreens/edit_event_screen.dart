@@ -1,6 +1,5 @@
 import 'package:eventplanningapp/firebase_utils.dart';
 import 'package:eventplanningapp/home/tab_event_widget.dart';
-import 'package:eventplanningapp/homescreen.dart';
 import 'package:eventplanningapp/models/event.dart';
 import 'package:eventplanningapp/providers/event_list_provider.dart';
 import 'package:eventplanningapp/providers/user_provider.dart';
@@ -18,7 +17,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class EditEventScreen extends StatefulWidget {
-  static const String routename = "EditEventScreen";
+  static const String routename = "EditEventScreen"; 
 
   const EditEventScreen({super.key});
 

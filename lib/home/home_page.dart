@@ -169,9 +169,9 @@ class HomePage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      
-                      Navigator.of(context)
-                          .pushNamed(EventDetailsScreen.routename,arguments: eventListProvider.eventList[index]);
+                      Navigator.of(context).pushNamed(
+                          EventDetailsScreen.routename,
+                          arguments: eventListProvider.eventList[index]);
                     },
                     child: EventItemWidget(
                       event: eventListProvider.eventList[index],

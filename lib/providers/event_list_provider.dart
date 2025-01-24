@@ -18,6 +18,7 @@ class EventListProvider extends ChangeNotifier {
 
   List<String> getEventsNameList(BuildContext context) {
     return [
+      //10 items
       AppLocalizations.of(context)!.all,
       AppLocalizations.of(context)!.sport,
       AppLocalizations.of(context)!.birthday,
@@ -50,7 +51,7 @@ class EventListProvider extends ChangeNotifier {
             .get();
     eventListFavorite = querySnapshot.docs.map((doc) {
       return doc.data();
-    }).toList();
+    }).toList(); 
 
     notifyListeners();
   }
